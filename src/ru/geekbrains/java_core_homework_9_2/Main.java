@@ -5,41 +5,41 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        try {
+        try { // Вызов проверки исключения с передачей введённого пользователем массива методу arrCheck
             System.out.println("Sum of array's elements: " + arrCheck(arrEntry()));
-        } catch (MyArraySizeException e) {
+        } catch (MyArraySizeException e) { // Перехват исключения размера массива
             System.out.println("MyArraySizeException error:");
-            e.printStackTrace();
+            e.printStackTrace(); // Вывод информации об исключении
 
-        } catch (MyArrayDataException e) {
+        } catch (MyArrayDataException e) { // Перехват исключения корректности ввода элементов массива
             System.out.println("MyArrayDataException error:");
-            e.printStackTrace();
+            e.printStackTrace(); // Вывод информации об исключении
         }
     }
 
-    public static int arrCheck(String[][] myArray) throws MyArrayDataException, MyArraySizeException {
+    public static int arrCheck(String[][] myArray) throws MyArrayDataException, MyArraySizeException { // Метод проверки массива и суммирования его элементов
         int sum = 0, x = 0, y = 0;
-        try {
-            if (myArray.length == 4 && myArray[0].length == 4) {
+        try { // Здесь не используются условные выражения, используется проверка на NumberFormatException
+            if (myArray.length == 4 && myArray[0].length == 4) { // Проверка корректности размера массива
                 for (int i = 0; i < myArray[0].length; i++) {
                     for (int j = 0; j < myArray.length; j++) {
                         x = i;
                         y = j;
-                        sum += Integer.parseInt(myArray[i][j]);
+                        sum += Integer.parseInt(myArray[i][j]); // Суммирование элементов массива
                     }
                 }
-            } else throw new MyArraySizeException("Array size must be 4x4!");
-        } catch (NumberFormatException e) {
-            throw new MyArrayDataException("Cant convert symbol to int. Error in cell [" + x + ":" + y + "]", e);
+            } else throw new MyArraySizeException("Array size must be 4x4!"); // Передача исключения с сообщением о требуемом размере массива
+        } catch (NumberFormatException e) { // Перехват исключения формата данных
+            throw new MyArrayDataException("Cant convert symbol to int. Error in cell [" + x + ":" + y + "]", e); // Передача исключения MyArrayDataException с сообщением, координатами ошибки и данными из NumberFormatException
         }
-        return sum;
+        return sum; // Возврат посчитанной суммы
     }
 
-    public static String[][] arrEntry() {
+    public static String[][] arrEntry() { // Метод создания массива пользователем
         Scanner sc = new Scanner(System.in);
         int x = 0, y = 0;
         boolean exit = false;
-        do {
+        do { // Проверка на корректность ввода размера массива
             System.out.println("Enter number of lines (must be 4)");
             String input = sc.nextLine().trim();
             Scanner check = new Scanner(input);
@@ -59,12 +59,12 @@ public class Main {
             }
         } while (!exit);
 
-        String[][] myArray = new String[x][y];
+        String[][] myArray = new String[x][y]; // Создание массива
         System.out.print("Fill the array:");
         for (int i = 0; i < myArray.length; i++) {
             for (int j = 0; j < myArray[0].length; j++) {
                 System.out.printf("%nEnter %s %s element: ", i, j);
-                myArray[i][j] = sc.next();
+                myArray[i][j] = sc.next(); // Заполнение массива
             }
         }
         return myArray;
