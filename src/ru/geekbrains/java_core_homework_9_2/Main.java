@@ -8,10 +8,12 @@ public class Main {
         try {
             System.out.println("Sum of array's elements: " + arrCheck(arrEntry()));
         } catch (MyArraySizeException e) {
-            System.out.print("Exception: ");
-            e.message();
+            System.out.println("MyArraySizeException error:");
+            e.printStackTrace();
+
         } catch (MyArrayDataException e) {
-            System.out.println("Program is closing");
+            System.out.println("MyArrayDataException error:");
+            e.printStackTrace();
         }
     }
 
@@ -26,9 +28,9 @@ public class Main {
                         sum += Integer.parseInt(myArray[i][j]);
                     }
                 }
-            } else throw new MyArraySizeException();
+            } else throw new MyArraySizeException("Array size must be 4x4!");
         } catch (NumberFormatException e) {
-            throw new MyArrayDataException(x, y);
+            throw new MyArrayDataException("Cant convert symbol to int. Error in cell [" + x + ":" + y + "]", e);
         }
         return sum;
     }
